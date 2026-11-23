@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ficha de Constituição de Empresa | Contabilidade.Vet</title>
+<meta name="description" content="Preencha os dados para abrir sua empresa LTDA Unipessoal, uma pergunta por vez.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --magenta:#CC3366;
+    --magenta-2:#E0457C;
+    --verde:#10FF5A;
+    --bg:#0E0F12;
+    --bg-2:#16181D;
+    --texto:#F4F4F5;
+    --texto-2:#A6ABB4;
+    --linha:rgba(255,255,255,.08);
+    --erro:#FF6B8B;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{min-height:100%}
+  body{
+    font-family:'Inter',sans-serif;background:var(--bg);color:var(--texto);
+    -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  }
+  .app{
+    position:relative;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;
+    padding:24px clamp(20px,5vw,72px) 28px;isolation:isolate;
+  }
+  .app::before{content:"";position:fixed;z-index:-1;width:780px;height:780px;right:-240px;top:-280px;
+    background:radial-gradient(circle,rgba(204,51,102,.30),transparent 62%);filter:blur(10px)}
+  .app::after{content:"";position:fixed;z-index:-1;width:620px;height:620px;left:-260px;bottom:-300px;
+    background:radial-gradient(circle,rgba(16,255,90,.11),transparent 65%)}
+  .grade{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.5;
+    background-image:linear-gradient(var(--linha) 1px,transparent 1px),linear-gradient(90deg,var(--linha) 1px,transparent 1px);
+    background-size:64px 64px;
+    -webkit-mask-image:radial-gradient(ellipse at 60% 40%,#000 10%,transparent 70%);
+    mask-image:radial-gradient(ellipse at 60% 40%,#000 10%,transparent 70%)}
+
+  header{display:flex;align-items:center;justify-content:center;padding-bottom:18px}
+  .logo{display:inline-flex;align-items:center;text-decoration:none;color:var(--texto)}
+  .logo img{height:54px;width:auto;display:block}
+  .logo-texto{display:none;font-family:'Sora',sans-serif;font-weight:800;font-size:24px;letter-spacing:-.02em}
+  .logo-texto span{color:var(--verde)}
+
+  .topo{max-width:640px;width:100%;margin:0 auto}
+  .progresso{height:4px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden}
+  .progresso i{display:block;height:100%;width:0;border-radius:99px;
+    background:linear-gradient(90deg,var(--magenta),var(--verde));transition:width .45s cubic-bezier(.2,.7,.2,1)}
+  .meta{display:flex;justify-content:space-between;align-items:center;margin-top:12px;
+    font-size:12px;color:var(--texto-2);font-weight:500}
+  .secao{font-family:'Sora',sans-serif;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--magenta-2)}
+
+  main{flex:1;display:flex;align-items:center;justify-content:center;padding:28px 0}
+  .cartao{max-width:640px;width:100%}
+  .passo{animation:entra .45s cubic-bezier(.2,.7,.2,1) both}
+  .passo.volta{animation-name:entraVolta}
+  @keyframes entra{from{opacity:0;transform:translateX(28px)}to{opacity:1;transform:none}}
+  @keyframes entraVolta{from{opacity:0;transform:translateX(-28px)}to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){.passo{animation:none}.progresso i{transition:none}}
+
+  h1,h2{font-family:'Sora',sans-serif;font-weight:800;letter-spacing:-.03em;line-height:1.1}
+  h2{font-size:clamp(26px,4.4vw,40px)}
+  h1{font-size:clamp(30px,5vw,48px)}
+  h1 em,h2 em{font-style:normal;color:var(--verde)}
+  .dica{margin-top:12px;font-size:clamp(14px,1.2vw,16px);line-height:1.55;color:var(--texto-2)}
+  .dica strong{color:var(--texto);font-weight:600}
+
+  .campo{margin-top:28px}
+  input[type=text],input[type=email],input[type=tel],textarea{
+    width:100%;background:transparent;border:0;border-bottom:2px solid rgba(255,255,255,.18);
+    color:var(--texto);font-family:'Sora',sans-serif;font-weight:600;font-size:clamp(20px,3.2vw,28px);
+    padding:10px 0 12px;outline:none;border-radius:0;transition:border-color .2s}
+  textarea{resize:none;min-height:120px;line-height:1.35;font-size:clamp(18px,2.6vw,22px)}
+  input::placeholder,textarea::placeholder{color:rgba(166,171,180,.45);font-weight:400}
+  input:focus,textarea:focus{border-color:var(--verde)}
+  .invalido input,.invalido textarea{border-color:var(--erro)}
+  .erro{min-height:20px;margin-top:10px;font-size:13px;color:var(--erro);font-weight:500}
+
+  .opcoes{display:grid;gap:10px;margin-top:28px}
+  .opcao{
+    display:flex;align-items:center;gap:14px;text-align:left;width:100%;cursor:pointer;
+    background:var(--bg-2);color:var(--texto);border:1px solid var(--linha);border-radius:14px;
+    padding:16px 18px;font-family:'Inter',sans-serif;font-size:16px;font-weight:500;
+    transition:border-color .2s,background .2s,transform .15s}
+  .opcao:hover{border-color:rgba(16,255,90,.5);transform:translateY(-1px)}
+  .opcao kbd{font-family:'Sora',sans-serif;font-size:12px;font-weight:700;color:var(--verde);
+    border:1px solid rgba(16,255,90,.4);border-radius:6px;min-width:26px;height:26px;display:grid;place-items:center}
+  .opcao.sel{border-color:var(--verde);background:rgba(16,255,90,.08)}
+
+  .acoes{display:flex;align-items:center;gap:12px;margin-top:26px;flex-wrap:wrap}
+  .btn{
+    font-family:'Sora',sans-serif;font-weight:700;font-size:16px;border:0;cursor:pointer;
+    border-radius:14px;padding:16px 26px;display:inline-flex;align-items:center;gap:10px;text-decoration:none;
+    transition:transform .2s ease,box-shadow .2s ease}
+  .btn-ok{background:var(--verde);color:#062B12;box-shadow:0 10px 40px -10px rgba(16,255,90,.55)}
+  .btn-ok:hover{transform:translateY(-2px);box-shadow:0 16px 50px -10px rgba(16,255,90,.75)}
+  .btn-sec{background:transparent;color:var(--texto-2);border:1px solid var(--linha);padding:15px 20px;font-size:14px;font-family:'Inter',sans-serif;font-weight:600}
+  .btn-sec:hover{color:var(--texto);border-color:rgba(255,255,255,.25)}
+  .btn-link{background:none;border:0;color:var(--texto-2);font-size:14px;font-weight:500;cursor:pointer;
+    text-decoration:underline;text-underline-offset:3px;font-family:'Inter',sans-serif}
+  .btn-link:hover{color:var(--texto)}
+  .enter{font-size:12px;color:var(--texto-2)}
+  .enter b{color:var(--texto)}
+  .btn svg{width:22px;height:22px;flex-shrink:0}
+
+  /* revisão */
+  .revisao{margin-top:22px;border:1px solid var(--linha);border-radius:16px;background:rgba(22,24,29,.7);overflow:hidden}
+  .grupo{padding:6px 0;border-top:1px solid var(--linha)}
+  .grupo:first-child{border-top:0}
+  .grupo h3{font-family:'Sora',sans-serif;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--magenta-2);padding:14px 18px 6px}
+  .linha{display:flex;gap:12px;justify-content:space-between;align-items:baseline;padding:9px 18px;font-size:14px}
+  .linha span:first-child{color:var(--texto-2);flex:0 0 42%}
+  .linha span:nth-child(2){flex:1;text-align:right;font-weight:600;word-break:break-word}
+  .linha button{background:none;border:0;color:var(--verde);font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif}
+  .docs{margin-top:18px;border:1px dashed rgba(16,255,90,.4);border-radius:14px;padding:16px 18px;font-size:14px;line-height:1.6;color:var(--texto-2)}
+  .docs strong{color:var(--texto)}
+  .docs li{margin-left:18px}
+  .aviso{margin-top:14px;font-size:12px;color:var(--texto-2);line-height:1.5}
+  .toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,20px);background:var(--bg-2);border:1px solid var(--verde);
+    color:var(--texto);padding:12px 18px;border-radius:12px;font-size:14px;font-weight:500;opacity:0;pointer-events:none;transition:.3s}
+  .toast.on{opacity:1;transform:translate(-50%,0)}
+
+  @media (max-width:640px){
+    .app{padding:18px 18px 22px}
+    .logo img{height:44px}
+    .btn-ok{width:100%;justify-content:center}
+    .acoes .btn-sec{order:2}
+    .linha{flex-direction:column;gap:2px}
+    .linha span:nth-child(2){text-align:left}
+    .linha span:first-child{flex:none}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="grade"></div>
+
+  <header>
+    <a class="logo" href="https://contabilidade.vet/" aria-label="Contabilidade.Vet">
+      <img src="https://contabilidade.vet/wp-content/uploads/2024/01/Logo-Vertical-Colorida.svg" alt="Contabilidade.Vet"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+      <span class="logo-texto">Contabilidade<span>.Vet</span></span>
+    </a>
+  </header>
+
+  <div class="topo" id="topo" hidden>
+    <div class="progresso"><i id="barra"></i></div>
+    <div class="meta"><span class="secao" id="secao"></span><span id="contador"></span></div>
+  </div>
+
+  <main><div class="cartao" id="cartao"></div></main>
+  <div class="toast" id="toast"></div>
+</div>
+
+<script>
+/* =========================================================
+   CONFIGURAÇÃO
+   ========================================================= */
+const WHATSAPP = "556193122120";   // Fabio Dutra, Contador: (61) 9312-2120, com DDI 55
+const TITULO_MSG = "FICHA PARA CONSTITUIÇÃO DE SOCIEDADE LTDA UNIPESSOAL";
+
+/* =========================================================
+   MÁSCARAS E VALIDAÇÕES
+   ========================================================= */
+const so = v => v.replace(/\D/g,"");
+const mask = {
+  cpf:  v => so(v).slice(0,11).replace(/(\d{3})(\d)/,"$1.$2").replace(/(\d{3})(\d)/,"$1.$2").replace(/(\d{3})(\d{1,2})$/,"$1-$2"),
+  cep:  v => so(v).slice(0,8).replace(/(\d{5})(\d)/,"$1-$2"),
+  data: v => so(v).slice(0,8).replace(/(\d{2})(\d)/,"$1/$2").replace(/(\d{2})(\d)/,"$1/$2"),
+  tel:  v => { const d=so(v).slice(0,11); return d.length>10 ? d.replace(/(\d{2})(\d{5})(\d{0,4})/,"($1) $2-$3") : d.replace(/(\d{2})(\d{4})(\d{0,4})/,"($1) $2-$3").replace(/-$/,"").replace(/^\((\d*)$/,"($1"); },
+  ano:  v => so(v).slice(0,4),
+  moeda:v => { const d=so(v).slice(0,12); if(!d) return ""; return "R$ "+(parseInt(d,10)/100).toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2}); },
+  num:  v => so(v).slice(0,20)
+};
+const val = {
+  cpf(v){
+    const d=so(v); if(d.length!==11||/^(\d)\1+$/.test(d)) return "CPF inválido.";
+    const calc=n=>{let s=0;for(let i=0;i<n;i++)s+=+d[i]*(n+1-i);const r=(s*10)%11;return r===10?0:r};
+    return (calc(9)===+d[9]&&calc(10)===+d[10])?"":"CPF inválido. Confira os números.";
+  },
+  cep:v=>so(v).length===8?"":"O CEP tem 8 números.",
+  data(v){
+    const m=v.match(/^(\d{2})\/(\d{2})\/(\d{4})$/); if(!m) return "Use o formato dd/mm/aaaa.";
+    const [,d,mo,a]=m.map(Number); const dt=new Date(a,mo-1,d);
+    if(dt.getFullYear()!==a||dt.getMonth()!==mo-1||dt.getDate()!==d) return "Essa data não existe.";
+    if(dt>new Date()) return "A data não pode ser futura.";
+    if(a<1900) return "Confira o ano.";
+    return "";
+  },
+  email:v=>/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)?"":"E-mail inválido.",
+  tel:v=>{const n=so(v).length;return(n===10||n===11)?"":"Informe DDD + número.";},
+  ano:v=>(+v>=2000&&+v<=new Date().getFullYear())?"":"Informe um ano válido (ex.: "+(new Date().getFullYear()-1)+").",
+  moeda:v=>so(v)&&parseInt(so(v),10)>0?"":"Informe um valor maior que zero."
+};
+
+/* =========================================================
+   PERGUNTAS (uma por tela), na ordem da ficha
+   tipo: texto | tel | email | area | escolha
+   ========================================================= */
+const SIM_NAO=["Sim","Não"];
+const Q = [
+  /* ---- 1. DADOS DO SÓCIO ADMINISTRADOR ---- */
+  {id:"nome",grupo:"Sócio administrador",secao:"Seus dados",titulo:"Qual é o seu <em>nome completo</em>?",dica:"Exatamente como está no documento de identidade.",rotulo:"Nome completo",ph:"Nome e sobrenomes",auto:"name"},
+  {id:"pai",grupo:"Sócio administrador",secao:"Seus dados",titulo:"Qual é o nome do seu <em>pai</em>?",dica:"Nome completo, como consta no RG.",rotulo:"Nome do pai",ph:"Nome completo do pai",opcional:true,pular:"Não consta"},
+  {id:"mae",grupo:"Sócio administrador",secao:"Seus dados",titulo:"E o nome da sua <em>mãe</em>?",dica:"Nome completo, como consta no RG.",rotulo:"Nome da mãe",ph:"Nome completo da mãe"},
+  {id:"rg",grupo:"Sócio administrador",secao:"Seus dados",titulo:"Qual é o número do seu <em>RG</em>?",rotulo:"RG",ph:"Número do RG"},
+  {id:"rgdata",grupo:"Sócio administrador",secao:"Seus dados",titulo:"Qual é a <em>data de expedição</em> do RG?",dica:"Está no documento, perto do órgão expedidor.",rotulo:"Data de expedição do RG",ph:"dd/mm/aaaa",mask:"data",val:"data",modo:"numeric"},
+  {id:"rgorgao",grupo:"Sócio administrador",secao:"Seus dados",titulo:"Qual é o <em>órgão expedidor</em> do RG?",dica:"Por exemplo: SSP/DF, SSP/MG, DETRAN.",rotulo:"Órgão expedidor",ph:"Ex.: SSP/DF"},
+  {id:"nasc",grupo:"Sócio administrador",secao:"Seus dados",titulo:"Qual é a sua <em>data de nascimento</em>?",rotulo:"Data de nascimento",ph:"dd/mm/aaaa",mask:"data",val:"data",modo:"numeric"},
+  {id:"local",grupo:"Sócio administrador",secao:"Seus dados",titulo:"Em qual <em>cidade e estado</em> você nasceu?",rotulo:"Local de nascimento",ph:"Ex.: Brasília/DF"},
+  {id:"cpf",grupo:"Sócio administrador",secao:"Seus dados",titulo:"Qual é o seu <em>CPF</em>?",rotulo:"CPF",ph:"000.000.000-00",mask:"cpf",val:"cpf",modo:"numeric"},
+  {id:"civil",grupo:"Sócio administrador",secao:"Seus dados",titulo:"Qual é o seu <em>estado civil</em>?",rotulo:"Estado civil",tipo:"escolha",opcoes:["Solteiro(a)","Casado(a)","União estável","Divorciado(a)","Separado(a)","Viúvo(a)"]},
+  {id:"regime",grupo:"Sócio administrador",secao:"Seus dados",titulo:"Qual é o <em>regime de comunhão</em> de bens?",dica:"Está na certidão de casamento ou na escritura de união estável.",rotulo:"Regime de comunhão",tipo:"escolha",opcoes:["Comunhão parcial de bens","Comunhão universal de bens","Separação total de bens","Participação final nos aquestos","Não sei informar"],
+    se:r=>["Casado(a)","União estável"].includes(r.civil)},
+  {id:"prof",grupo:"Sócio administrador",secao:"Seus dados",titulo:"Qual é a sua <em>profissão</em>?",rotulo:"Profissão",ph:"Ex.: Médico veterinário"},
+  {id:"cep",grupo:"Sócio administrador",secao:"Contato e endereço",titulo:"Qual é o <em>CEP</em> da sua residência?",rotulo:"CEP residencial",ph:"00000-000",mask:"cep",val:"cep",modo:"numeric",auto:"postal-code"},
+  {id:"end",grupo:"Sócio administrador",secao:"Contato e endereço",titulo:"Qual é o seu <em>endereço residencial</em> completo?",dica:"Rua, número, complemento, bairro, cidade e estado.",rotulo:"Endereço residencial",tipo:"area",ph:"Ex.: Rua das Flores, 123, apto 45, Asa Sul, Brasília/DF",auto:"street-address"},
+  {id:"cel",grupo:"Sócio administrador",secao:"Contato e endereço",titulo:"Qual é o seu <em>celular</em>?",dica:"Com DDD. De preferência o mesmo número do WhatsApp.",rotulo:"Celular",ph:"(00) 00000-0000",tipo:"tel",mask:"tel",val:"tel",auto:"tel"},
+  {id:"telres",grupo:"Sócio administrador",secao:"Contato e endereço",titulo:"Tem <em>telefone residencial</em>?",dica:"Se não tiver, é só pular.",rotulo:"Telefone residencial",ph:"(00) 0000-0000",tipo:"tel",mask:"tel",val:"tel",opcional:true,pular:"Não tenho"},
+  {id:"email",grupo:"Sócio administrador",secao:"Contato e endereço",titulo:"Qual é o seu <em>e-mail</em>?",rotulo:"E-mail",ph:"voce@email.com",tipo:"email",val:"email",auto:"email"},
+  {id:"titulo",grupo:"Sócio administrador",secao:"Documentos",titulo:"Qual é o número do seu <em>título de eleitor</em>?",rotulo:"Título de eleitor",ph:"Número do título",mask:"num",modo:"numeric"},
+  {id:"pis",grupo:"Sócio administrador",secao:"Documentos",titulo:"Qual é o seu número de <em>PIS/PASEP</em>?",dica:"Aparece na Carteira de Trabalho digital e no app Meu INSS.",rotulo:"PIS/PASEP",ph:"Número do PIS/PASEP",mask:"num",modo:"numeric"},
+  {id:"ctps",grupo:"Sócio administrador",secao:"Documentos",titulo:"Qual é o número da sua <em>CTPS</em>?",dica:"Carteira de Trabalho. Se nunca teve, pode pular.",rotulo:"CTPS nº",ph:"Número da CTPS",opcional:true,pular:"Não tenho"},
+  {id:"ctpsserie",grupo:"Sócio administrador",secao:"Documentos",titulo:"Qual é a <em>série</em> da CTPS?",rotulo:"Série da CTPS",ph:"Série",opcional:true,pular:"Não sei",se:r=>r.ctps&&r.ctps!=="Não tenho"},
+  {id:"ctpsdata",grupo:"Sócio administrador",secao:"Documentos",titulo:"Qual é a <em>data de expedição</em> da CTPS?",rotulo:"Data de expedição da CTPS",ph:"dd/mm/aaaa",mask:"data",val:"data",modo:"numeric",opcional:true,pular:"Não sei",se:r=>r.ctps&&r.ctps!=="Não tenho"},
+  {id:"ir1ano",grupo:"Imposto de renda (últimos 2 anos)",secao:"Imposto de renda",titulo:"Qual foi o <em>ano</em> da sua declaração de IR mais recente?",dica:"Vamos pedir o número do recibo das duas últimas declarações. Se não declarou, pode pular.",rotulo:"1ª declaração: ano",ph:"Ex.: "+(new Date().getFullYear()-1),mask:"ano",val:"ano",modo:"numeric",opcional:true,pular:"Não declarei"},
+  {id:"ir1rec",grupo:"Imposto de renda (últimos 2 anos)",secao:"Imposto de renda",titulo:"Qual é o <em>número do recibo</em> dessa declaração?",dica:"Fica na primeira página do recibo de entrega da declaração.",rotulo:"1ª declaração: recibo",ph:"Número do recibo",mask:"num",modo:"numeric",se:r=>r.ir1ano&&r.ir1ano!=="Não declarei"},
+  {id:"ir2ano",grupo:"Imposto de renda (últimos 2 anos)",secao:"Imposto de renda",titulo:"E o <em>ano</em> da declaração anterior a essa?",rotulo:"2ª declaração: ano",ph:"Ex.: "+(new Date().getFullYear()-2),mask:"ano",val:"ano",modo:"numeric",opcional:true,pular:"Não declarei",se:r=>r.ir1ano&&r.ir1ano!=="Não declarei"},
+  {id:"ir2rec",grupo:"Imposto de renda (últimos 2 anos)",secao:"Imposto de renda",titulo:"Qual é o <em>número do recibo</em> dela?",rotulo:"2ª declaração: recibo",ph:"Número do recibo",mask:"num",modo:"numeric",se:r=>r.ir2ano&&r.ir2ano!=="Não declarei"},
+
+  /* ---- 2. DADOS DA SOCIEDADE ---- */
+  {id:"nome1",grupo:"Dados da sociedade",secao:"Sua empresa",titulo:"Qual é o <em>nome empresarial</em> de primeira opção?",dica:"São 3 opções, em ordem de preferência. O nome deve vir seguido do <strong>complemento da atividade</strong>. Exemplo: Silva Clínica Veterinária LTDA.",rotulo:"Nome empresarial (1ª opção)",ph:"Nome + atividade"},
+  {id:"nome2",grupo:"Dados da sociedade",secao:"Sua empresa",titulo:"E a <em>segunda opção</em> de nome?",dica:"Usada caso o primeiro nome já esteja registrado.",rotulo:"Nome empresarial (2ª opção)",ph:"Nome + atividade"},
+  {id:"nome3",grupo:"Dados da sociedade",secao:"Sua empresa",titulo:"E a <em>terceira opção</em>?",rotulo:"Nome empresarial (3ª opção)",ph:"Nome + atividade"},
+  {id:"fantasia",grupo:"Dados da sociedade",secao:"Sua empresa",titulo:"Qual será o <em>nome fantasia</em>?",dica:"É o nome pelo qual os clientes vão conhecer a empresa.",rotulo:"Nome fantasia",ph:"Nome fantasia"},
+  {id:"capital",grupo:"Dados da sociedade",secao:"Sua empresa",titulo:"Qual será o <em>valor do capital social</em>?",dica:"Valor que você vai investir na empresa. Na LTDA Unipessoal, o capital pertence 100% ao sócio único.",rotulo:"Capital social",ph:"R$ 0,00",mask:"moeda",val:"moeda",modo:"numeric"},
+  {id:"objetivo",grupo:"Dados da sociedade",secao:"Sua empresa",titulo:"Qual é o <em>objetivo social</em> da empresa?",dica:"Descreva as atividades que a empresa vai exercer. Pode escrever com suas palavras que o contador organiza.",rotulo:"Objetivo social / atividade",tipo:"area",ph:"Ex.: Clínica veterinária, venda de produtos pet, banho e tosa..."},
+  {id:"cepcom",grupo:"Dados da sociedade",secao:"Endereço da empresa",titulo:"Qual é o <em>CEP comercial</em>?",rotulo:"CEP comercial",ph:"00000-000",mask:"cep",val:"cep",modo:"numeric"},
+  {id:"endcom",grupo:"Dados da sociedade",secao:"Endereço da empresa",titulo:"Qual é o <em>endereço comercial</em> completo?",dica:"Rua, número, complemento, bairro, cidade e estado.",rotulo:"Endereço comercial",tipo:"area",ph:"Ex.: Av. Central, 500, sala 3, Centro, Brasília/DF"},
+  {id:"iptu",grupo:"Dados da sociedade",secao:"Endereço da empresa",titulo:"Qual é o número do <em>IPTU</em> do imóvel comercial?",dica:"Está no carnê ou na guia do IPTU. Se não tiver em mãos, pode pular.",rotulo:"IPTU nº",ph:"Número do IPTU",opcional:true,pular:"Informo depois"},
+  {id:"emailcom",grupo:"Dados da sociedade",secao:"Endereço da empresa",titulo:"Qual será o <em>e-mail comercial</em>?",rotulo:"E-mail comercial",ph:"contato@suaempresa.com",tipo:"email",val:"email"},
+  {id:"telcom",grupo:"Dados da sociedade",secao:"Endereço da empresa",titulo:"Qual será o <em>telefone comercial</em>?",rotulo:"Telefone comercial",ph:"(00) 00000-0000",tipo:"tel",mask:"tel",val:"tel"},
+  {id:"prolabore",grupo:"Dados da sociedade",secao:"Finanças",titulo:"Você vai retirar <em>pró-labore</em>?",dica:"Pró-labore é a remuneração mensal do sócio pelo trabalho na empresa.",rotulo:"Retirada de pró-labore",tipo:"escolha",opcoes:SIM_NAO},
+  {id:"valorpl",grupo:"Dados da sociedade",secao:"Finanças",titulo:"Qual será o <em>valor da retirada</em> mensal?",rotulo:"Valor da retirada",ph:"R$ 0,00",mask:"moeda",val:"moeda",modo:"numeric",se:r=>r.prolabore==="Sim"},
+  {id:"simples",grupo:"Dados da sociedade",secao:"Finanças",titulo:"A empresa vai optar pelo <em>Simples Nacional</em>?",dica:"Se tiver dúvida, escolha “Não sei” que o contador orienta.",rotulo:"Simples Nacional",tipo:"escolha",opcoes:["Sim","Não","Não sei, quero orientação"]},
+  {id:"fiscal",grupo:"Dados da sociedade",secao:"Finanças",titulo:"Qual será o <em>endereço fiscal</em>?",dica:"É o endereço onde a empresa fica estabelecida para fins fiscais.",rotulo:"Endereço fiscal",tipo:"escolha",opcoes:["O mesmo endereço comercial","O mesmo endereço residencial","Outro endereço (informo ao contador)"]}
+];
+
+/* =========================================================
+   ESTADO E RENDER
+   ========================================================= */
+const R = {};            // respostas
+let i = -1;              // passo atual (-1 = boas-vindas)
+let voltando = false;
+const cartao=document.getElementById("cartao"), topo=document.getElementById("topo");
+const visiveis = () => Q.filter(q=>!q.se||q.se(R));
+const esc = s => String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const toast = t => {const e=document.getElementById("toast");e.textContent=t;e.classList.add("on");clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove("on"),2400)};
+
+function boasVindas(){
+  topo.hidden=true;
+  cartao.innerHTML=`
+  <div class="passo">
+    <span class="secao" style="font-size:12px">Abertura de empresa</span>
+    <h1 style="margin-top:14px">Vamos abrir a sua <em>empresa</em>.</h1>
+    <p class="dica">Preencha a ficha de constituição de <strong>LTDA Unipessoal</strong> respondendo uma pergunta por vez. No final, você confere tudo e envia direto para o contador <strong>Fabio Dutra</strong> pelo WhatsApp.</p>
+    <div class="docs"><strong>Tenha em mãos:</strong> RG ou CNH e CPF. Leva cerca de 8 minutos.</div>
+    <div class="acoes"><button class="btn btn-ok" id="comecar">Começar</button><span class="enter">ou pressione <b>Enter</b></span></div>
+  </div>`;
+  document.getElementById("comecar").onclick=()=>ir(0);
+}
+
+function ir(n){ voltando = n < i; i = n; render(); }
+
+function render(){
+  const V = visiveis();
+  if(i>=V.length) return revisao();
+  const q = V[i];
+  topo.hidden=false;
+  document.getElementById("secao").textContent=q.secao;
+  document.getElementById("contador").textContent=`${i+1} de ${V.length}`;
+  document.getElementById("barra").style.width=((i)/V.length*100)+"%";
+  const atual = R[q.id]!==undefined && R[q.id]!==q.pular ? R[q.id] : "";
+  let campo="";
+  if(q.tipo==="escolha"){
+    campo=`<div class="opcoes">${q.opcoes.map((o,k)=>`<button class="opcao ${R[q.id]===o?"sel":""}" data-v="${esc(o)}"><kbd>${k+1}</kbd>${esc(o)}</button>`).join("")}</div>`;
+  }else if(q.tipo==="area"){
+    campo=`<div class="campo"><textarea id="in" placeholder="${esc(q.ph||"")}" ${q.auto?`autocomplete="${q.auto}"`:""}>${esc(atual)}</textarea><div class="erro" id="erro"></div></div>`;
+  }else{
+    const t = q.tipo==="email"?"email":q.tipo==="tel"?"tel":"text";
+    campo=`<div class="campo"><input id="in" type="${t}" value="${esc(atual)}" placeholder="${esc(q.ph||"")}" ${q.modo?`inputmode="${q.modo}"`:""} ${q.auto?`autocomplete="${q.auto}"`:'autocomplete="off"'} autocapitalize="${q.tipo==="email"?"none":"words"}" spellcheck="false"><div class="erro" id="erro"></div></div>`;
+  }
+  cartao.innerHTML=`
+  <div class="passo ${voltando?"volta":""}">
+    <h2>${q.titulo}</h2>
+    ${q.dica?`<p class="dica">${q.dica}</p>`:""}
+    ${campo}
+    <div class="acoes">
+      ${q.tipo!=="escolha"?`<button class="btn btn-ok" id="prox">Continuar</button>`:""}
+      ${i>0?`<button class="btn btn-sec" id="volt">Voltar</button>`:""}
+      ${q.opcional?`<button class="btn-link" id="pul">${esc(q.pular||"Pular")}</button>`:""}
+      ${q.tipo!=="escolha"?`<span class="enter">ou pressione <b>Enter</b></span>`:""}
+    </div>
+  </div>`;
+
+  const inp=document.getElementById("in");
+  if(inp){
+    if(!matchMedia("(max-width:640px)").matches||true) setTimeout(()=>inp.focus({preventScroll:true}),60);
+    inp.addEventListener("input",()=>{
+      if(q.mask){const p=inp.selectionStart,l=inp.value.length;inp.value=mask[q.mask](inp.value);if(p<l)inp.setSelectionRange(p,p)}
+      inp.closest(".campo").classList.remove("invalido");document.getElementById("erro").textContent="";
+    });
+    inp.addEventListener("keydown",e=>{ if(e.key==="Enter"&&(inp.tagName!=="TEXTAREA"||!e.shiftKey)){e.preventDefault();avancar(q)} });
+    document.getElementById("prox").onclick=()=>avancar(q);
+  }
+  document.querySelectorAll(".opcao").forEach(b=>b.onclick=()=>{
+    R[q.id]=b.dataset.v; limparDependentes(q.id);
+    document.querySelectorAll(".opcao").forEach(x=>x.classList.toggle("sel",x===b));
+    setTimeout(()=>ir(i+1),220);
+  });
+  const v=document.getElementById("volt"); if(v) v.onclick=()=>ir(i-1);
+  const p=document.getElementById("pul"); if(p) p.onclick=()=>{R[q.id]=q.pular||"Não informado";limparDependentes(q.id);ir(i+1)};
+}
+
+function limparDependentes(id){ /* remove respostas de perguntas que deixaram de aparecer */
+  Q.forEach(q=>{ if(q.se&&!q.se(R)) delete R[q.id]; });
+}
+
+function avancar(q){
+  const inp=document.getElementById("in"); let v=inp.value.trim();
+  let msg="";
+  if(!v) msg="Preencha este campo para continuar.";
+  else if(q.val) msg=val[q.val](v);
+  if(msg){ inp.closest(".campo").classList.add("invalido"); document.getElementById("erro").textContent=msg; inp.focus(); return; }
+  R[q.id]=v; limparDependentes(q.id); ir(i+1);
+}
+
+/* =========================================================
+   REVISÃO E ENVIO
+   ========================================================= */
+function montarMensagem(){
+  const V=visiveis(); let out=`*${TITULO_MSG}*\n`; let g="";
+  V.forEach(q=>{
+    if(R[q.id]===undefined) return;
+    if(q.grupo!==g){ g=q.grupo; out+=`\n*${g.toUpperCase()}*\n`; }
+    out+=`${q.rotulo}: ${R[q.id]}\n`;
+    if(q.id==="capital") out+=`Divisão do capital social: 1º sócio 100%\n`;
+  });
+  out+=`\n_Enviado pelo formulário online. Seguem em anexo as cópias de CPF, RG ou CNH e comprovante de residência._`;
+  return out;
+}
+
+function revisao(){
+  topo.hidden=false;
+  document.getElementById("secao").textContent="Revisão";
+  document.getElementById("contador").textContent="Quase lá";
+  document.getElementById("barra").style.width="100%";
+  const V=visiveis(); let html="",g="";
+  V.forEach((q,idx)=>{
+    if(R[q.id]===undefined) return;
+    if(q.grupo!==g){ if(g) html+=`</div>`; g=q.grupo; html+=`<div class="grupo"><h3>${esc(g)}</h3>`; }
+    html+=`<div class="linha"><span>${esc(q.rotulo)}</span><span>${esc(R[q.id])}</span><button data-i="${idx}">Editar</button></div>`;
+  });
+  html+=`</div>`;
+  const url=`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(montarMensagem())}`;
+  cartao.innerHTML=`
+  <div class="passo ${voltando?"volta":""}">
+    <h2>Confira e <em>envie</em>.</h2>
+    <p class="dica">Revise os dados. Ao tocar no botão, o WhatsApp abre com a ficha pronta para o contador <strong>Fabio Dutra</strong>. É só apertar enviar.</p>
+    <div class="revisao">${html}</div>
+    <div class="docs"><strong>Depois de enviar, mande também nesta conversa:</strong>
+      <ul style="margin-top:6px"><li>Cópia do CPF e do documento de identidade ou CNH</li><li>Cópia do comprovante de residência do sócio</li></ul></div>
+    <div class="acoes">
+      <a class="btn btn-ok" id="enviar" href="${url}" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.8.9-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.2-.4-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.4.1-.6l.4-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.1c-.2-.5-.4-.5-.6-.5h-.5c-.2 0-.5.1-.7.3-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 0 0-8.6 15L2 22l5.1-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-2.9-.4-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>
+        Enviar para o WhatsApp</a>
+      <button class="btn btn-sec" id="volt">Voltar</button>
+      <button class="btn-link" id="copiar">Copiar texto da ficha</button>
+    </div>
+    <p class="aviso">Seus dados são enviados apenas por esta conversa de WhatsApp, direto ao contador. Este formulário não guarda nenhuma informação.</p>
+  </div>`;
+  document.getElementById("volt").onclick=()=>ir(V.length-1);
+  document.getElementById("copiar").onclick=()=>{
+    const t=montarMensagem().replace(/\*/g,"").replace(/_/g,"");
+    (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(()=>toast("Ficha copiada.")).catch(()=>{
+      const a=document.createElement("textarea");a.value=t;document.body.appendChild(a);a.select();
+      try{document.execCommand("copy");toast("Ficha copiada.")}catch(e){toast("Não foi possível copiar.")}a.remove();
+    });
+  };
+  cartao.querySelectorAll(".linha button").forEach(b=>b.onclick=()=>{
+    editando=true; voltando=true; i=+b.dataset.i; render();
+  });
+}
+
+/* Enter na tela de boas-vindas */
+document.addEventListener("keydown",e=>{
+  if(i===-1&&e.key==="Enter"){ir(0)}
+  /* atalhos 1-9 nas perguntas de escolha */
+  if(i>=0){
+    const op=document.querySelectorAll(".opcao");
+    if(op.length&&/^[1-9]$/.test(e.key)&&op[+e.key-1]) op[+e.key-1].click();
+  }
+});
+
+/* Depois de editar um item na revisão, retorna à revisão em vez de repassar todas as perguntas */
+let editando=false;
+const _ir=ir;
+ir=function(n){
+  const V=visiveis();
+  if(editando&&n>i&&V.every(q=>R[q.id]!==undefined)){ editando=false; voltando=false; i=V.length; return render(); }
+  if(n<0||n>=V.length) editando=false;
+  _ir(n);
+};
+
+boasVindas();
+</script>
+</body>
+</html>
